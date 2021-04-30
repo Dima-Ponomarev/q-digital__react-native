@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Main from './screens/main'
 import Slider from './screens/slider'
+import Navigation from './components/navigation'
+import { ScrollView, View } from 'react-native'
 import { NativeRouter as Router, Switch, Route } from 'react-router-native'
 import Redux from './redux/index'
 import { createStore } from 'redux'
@@ -17,14 +19,19 @@ export class App extends Component {
     return (
       <Provider store={store}>
         <Router>
-          <Switch>
-          <Route exact path='/'>
-            <Main />
-          </Route>
-          <Route path='/slider'>
-            <Slider />
-          </Route>
-          </Switch>
+          <View style={{flex: 1}}>
+            <ScrollView>
+                <Switch>
+                <Route exact path='/'>
+                  <Main />
+                </Route>
+                <Route path='/slider'>
+                  <Slider />
+                </Route>
+                </Switch>
+            </ScrollView>
+          </View>
+          <Navigation/>
         </Router>
       </Provider>
     )

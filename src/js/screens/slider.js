@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, ScrollView, Image, StyleSheet } from 'react-native'
+import { View, Image, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import { setLocal, setFetched } from '../redux/actions'
 import Button from '../components/button'
@@ -67,7 +67,7 @@ export class Slider extends Component {
 
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.slider}>
+      <View style={styles.slider}>
         <View style={styles.slider__wrapper}>
           <Button text='prev' onPress={this.onPrev}/>
           {this.state.slider && (
@@ -84,12 +84,12 @@ export class Slider extends Component {
         <View style={styles.slider__control}>
           <View style={styles.slider__btnSwitch}>
             <Button
-              text={this.state.imageType === 'local' ? 'Switch to remote' : 'Switch to local'} 
+              text={this.state.imageType === 'local' ? 'Switch to remote' : 'Switch to localeeee'} 
               onPress={this.onSwitch}/>
           </View>
           <Button text='Back to main' type='link' to='/'/>
         </View>
-      </ScrollView>
+      </View>
     )
   }
 }
