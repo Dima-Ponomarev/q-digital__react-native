@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Linking, TouchableHighlight, BackHandler } from 'react-native'
+import { View, StyleSheet, Linking, TouchableOpacity, BackHandler } from 'react-native'
 import { Link } from 'react-router-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
@@ -14,22 +14,22 @@ export class Navigation extends Component {
   render() {
     return (
       <View style={styles.nav}>
-        <Link style={styles.nav__tab} to='/'>
+        <Link style={styles.nav__tab} to='/' component={TouchableOpacity}>
           <Icon size={40} name='home' color='#000'/>
         </Link>
-        <Link style={styles.nav__tab} to='/slider'>
+        <Link style={styles.nav__tab} to='/slider' component={TouchableOpacity}>
           <Icon size={40} name='image' color='#000'/>
         </Link>
         <View style={styles.nav__tab}>
           <Icon size={40} name='music' color='#000'/>
         </View>
-        <TouchableHighlight style={styles.nav__tab} onPress={() => this.handleRedirect('https://q-digital.org')}>
+        <TouchableOpacity style={styles.nav__tab} onPress={() => this.handleRedirect('https://q-digital.org')}>
           <Icon size={40} name='globe' color='#000'/>
-        </TouchableHighlight>
+        </TouchableOpacity>
         {/* Exit only works for android */}
-        <TouchableHighlight style={styles.nav__tab} onPress={this.handleExit}>
+        <TouchableOpacity style={styles.nav__tab} onPress={this.handleExit}>
           <Icon size={40} name='close' color='#000'/>
-        </TouchableHighlight>
+        </TouchableOpacity>
       </View>
     )
   }
@@ -39,12 +39,10 @@ const styles = StyleSheet.create({
   nav: {
     position: 'absolute',
     bottom: 0,
-
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-
     backgroundColor: '#eee',
     borderTopColor: '#000',
     borderTopWidth: 1
@@ -54,7 +52,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '20%',
-
     paddingVertical: 10
   }
 })

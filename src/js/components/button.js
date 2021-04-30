@@ -6,11 +6,9 @@ export class Button extends Component {
   render() {
     if (this.props.type === 'link'){
       return (
-        <TouchableOpacity>
-          <Link to={this.props.to} style={styles.button}>
-            <Text style={[styles.button__text, styles.link]}>{this.props.text}</Text>
-          </Link>
-        </TouchableOpacity>
+        <Link to={this.props.to} style={styles.button} component={TouchableOpacity}>
+          <Text style={[styles.button__text, styles.link]}>{this.props.text}</Text>
+        </Link>
       )
     } else {
       return (
@@ -31,7 +29,6 @@ const styles = StyleSheet.create({
   button__text: {
     color: 'white',
     fontSize: 20,
-
     padding: 10
   },
   link:{

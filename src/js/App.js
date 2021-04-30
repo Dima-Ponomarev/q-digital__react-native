@@ -20,16 +20,14 @@ export class App extends Component {
       <Provider store={store}>
         <Router>
           <View style={{flex: 1, backgroundColor: '#eee', height: '100%'}}>
-
-                <Switch>
-                  <Route exact path='/'>
-                    <Main />
-                  </Route>
-                  <Route path='/slider'>
-                    <Slider />
-                  </Route>
-                </Switch>
-
+            <Switch>
+              <Route exact path='/'>
+                <Main />
+              </Route>
+              <Route path='/slider'>
+                <Slider />
+              </Route>
+            </Switch>
             <Navigation/>
           </View>
         </Router>
