@@ -18,14 +18,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center', 
     alignItems: 'center',
-
     backgroundColor: '#ddd',
     height: 650
   },
   title: {
     fontSize: 30,
     textTransform: 'uppercase',
-
     marginBottom: 10
   }
 })

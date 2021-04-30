@@ -101,7 +101,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-
     backgroundColor: '#eee',
     height: 800
   },
@@ -116,7 +115,6 @@ const styles = StyleSheet.create({
   slider__image:{
     width: 250,
     height: 350,
-    
     backgroundColor: '#000',
     margin: 10,
   },
@@ -124,7 +122,6 @@ const styles = StyleSheet.create({
   slider__control:{
     flex: 1,
     alignItems: 'center',
-
   },
 
   slider__btnSwitch:{
@@ -134,7 +131,6 @@ const styles = StyleSheet.create({
   slider__imageContainer:{
     width: 250,
     height: 300,
-    
     backgroundColor: '#000',
     margin: 10,
   }
