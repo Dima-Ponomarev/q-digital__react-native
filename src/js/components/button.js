@@ -27,7 +27,6 @@ export class Button extends Component {
 const styles = StyleSheet.create({
   button: {
     backgroundColor: '#000',
-    textAlign: 'center'
   },
   button__text: {
     color: 'white',

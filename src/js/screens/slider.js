@@ -71,20 +71,22 @@ export class Slider extends Component {
         <View style={styles.slider__wrapper}>
           <Button text='prev' onPress={this.onPrev}/>
           {this.state.slider && (
-            <Image
-              style={styles.slider__image} 
-              resizeMode='contain'
-              source={this.state.imageType === 'local' ?
-              this.state.slider[this.state.index] :
-              {uri: this.state.slider[this.state.index]}}
-            />
+
+              <Image
+                style={styles.slider__image} 
+                resizeMode='cover'
+                source={this.state.imageType === 'local' ?
+                this.state.slider[this.state.index] :
+                {uri: this.state.slider[this.state.index]}}
+              />
+
           )}
           <Button text='next' onPress={this.onNext}/>
         </View>
         <View style={styles.slider__control}>
           <View style={styles.slider__btnSwitch}>
             <Button
-              text={this.state.imageType === 'local' ? 'Switch to remote' : 'Switch to localeeee'} 
+              text={this.state.imageType === 'local' ? 'Switch to remote' : 'Switch to local'} 
               onPress={this.onSwitch}/>
           </View>
           <Button text='Back to main' type='link' to='/'/>
@@ -101,26 +103,40 @@ const styles = StyleSheet.create({
     alignItems: 'center',
 
     backgroundColor: '#eee',
+    height: 800
   },
+
   slider__wrapper:{
-    flex: 1,
+    flex: 2,
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
-
-
   },
+
   slider__image:{
     width: 250,
-    height: 300,
+    height: 350,
+    
     backgroundColor: '#000',
-
     margin: 10,
   },
+
   slider__control:{
+    flex: 1,
+    alignItems: 'center',
+
   },
+
   slider__btnSwitch:{
     marginBottom: 10
+  },
+
+  slider__imageContainer:{
+    width: 250,
+    height: 300,
+    
+    backgroundColor: '#000',
+    margin: 10,
   }
 })
 

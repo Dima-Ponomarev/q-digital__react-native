@@ -19,19 +19,19 @@ export class App extends Component {
     return (
       <Provider store={store}>
         <Router>
-          <View style={{flex: 1}}>
-            <ScrollView>
+          <View style={{flex: 1, backgroundColor: '#eee', height: '100%'}}>
+
                 <Switch>
-                <Route exact path='/'>
-                  <Main />
-                </Route>
-                <Route path='/slider'>
-                  <Slider />
-                </Route>
+                  <Route exact path='/'>
+                    <Main />
+                  </Route>
+                  <Route path='/slider'>
+                    <Slider />
+                  </Route>
                 </Switch>
-            </ScrollView>
+
+            <Navigation/>
           </View>
-          <Navigation/>
         </Router>
       </Provider>
     )
