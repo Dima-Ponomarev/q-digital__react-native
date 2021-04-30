@@ -1,21 +1,24 @@
 import React, { Component } from 'react'
-import { View, Text,  StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { Link } from 'react-router-native'
 
 export class Button extends Component {
   render() {
     if (this.props.type === 'link'){
-      console.log('in')
       return (
-        <Link to={this.props.to} style={styles.button}>
-          <Text style={[styles.button__text, styles.link]}>{this.props.text}</Text>
-        </Link>
+        <TouchableOpacity>
+          <Link to={this.props.to} style={styles.button}>
+            <Text style={[styles.button__text, styles.link]}>{this.props.text}</Text>
+          </Link>
+        </TouchableOpacity>
       )
     } else {
       return (
-        <View onPress={this.props.onPress} style={styles.button}>
-          <Text style={styles.button__text}>{this.props.text}</Text>
-        </View>
+        <TouchableOpacity onPress={this.props.onPress}>
+          <View style={styles.button}>
+            <Text style={styles.button__text}>{this.props.text}</Text>
+          </View>
+        </TouchableOpacity>
       )
     }
   }
@@ -24,6 +27,7 @@ export class Button extends Component {
 const styles = StyleSheet.create({
   button: {
     backgroundColor: '#000',
+    textAlign: 'center'
   },
   button__text: {
     color: 'white',
