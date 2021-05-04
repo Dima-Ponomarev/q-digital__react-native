@@ -1,4 +1,4 @@
-import { SET_LOCAL, SET_FETCHED, SET_PLAYLIST, SET_PLAYER_STATUS} from './actionTypes'
+import { SET_LOCAL, SET_FETCHED, SET_PLAYLIST, SET_PLAYER_STATUS, SET_PLAYING_STATUS, SET_CURRENT_INDEX} from './actionTypes'
 
 export function setLocal(images) {
   return {
@@ -25,5 +25,19 @@ export function setPlayerStatus(status) {
   return {
     type: SET_PLAYER_STATUS,
     payload: status
+  }
+}
+
+export function setPlayingStatus(status) {
+  return {
+    type: SET_PLAYING_STATUS,
+    payload: status
+  }
+}
+
+export function setCurrentIndex(index) {
+  return {
+    type: SET_CURRENT_INDEX,
+    payload: index
   }
 }

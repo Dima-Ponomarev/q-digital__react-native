@@ -1,7 +1,11 @@
 
 const initialState = {
   images: {},
-  playlist: {}
+  playlist: {
+    currentIndex: 0,
+    isPlaying: false,
+    isReady: false
+  }
 }
 
 export default initialState

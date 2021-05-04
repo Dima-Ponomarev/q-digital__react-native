@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native'
 import TrackPlayer from 'react-native-track-player'
 import { connect } from 'react-redux'
-import { setPlaylist, setPlayerStatus } from '../redux/actions'
-import trackPlayerServices from '../services/trackPlayerService'
+import { setPlaylist, setPlayerStatus, setPlayingStatus, setCurrentIndex } from '../redux/actions'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 const localTracks = [
@@ -28,14 +27,19 @@ const localTracks = [
 ]
 
 export class Player extends Component {
-    state = {
-        isPlaying: false,
-        currentIndex: 0
-    }
-
     componentDidMount(){
         if(!this.props.isReady){
-            TrackPlayer.setupPlayer()
+            TrackPlayer.setupPlayer().then(() => {
+                TrackPlayer.updateOptions({
+                    capabilities: [
+                        TrackPlayer.CAPABILITY_PLAY,
+                        TrackPlayer.CAPABILITY_PAUSE,
+                        TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
+                        TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
+                    ],
+                    stopWithApp: true
+                })
+            })
             fetch('https://imagesapi.osora.ru/?isAudio=true')
             .then(res => res.json())
             .then(data => {
@@ -57,12 +61,12 @@ export class Player extends Component {
     }
 
     startPlaying = () => {
-        this.setState({isPlaying: true})
+        this.props.setPlayingStatus(true)
         TrackPlayer.play()
     }
 
     stopPlaying = () => {
-        this.setState({isPlaying: false})
+        this.props.setPlayingStatus(false)
         TrackPlayer.pause()
     }
 
@@ -73,17 +77,17 @@ export class Player extends Component {
         } else {
             TrackPlayer.skipToNext()
         }
-        this.setState({currentIndex: (this.state.currentIndex + 1) % this.props.playlist.length})
+        this.props.setCurrentIndex((this.props.currentIndex + 1) % this.props.playlist.length)
     }
 
     previousTrack = async () => {
         const trackId = await TrackPlayer.getCurrentTrack()
         if (trackId === this.props.playlist[0].id){
             TrackPlayer.skip(this.props.playlist[this.props.playlist.length - 1].id)
-            this.setState({currentIndex: this.props.playlist.length - 1})
+            this.props.setCurrentIndex(this.props.playlist.length - 1)
         } else {
             TrackPlayer.skipToPrevious()
-            this.setState({currentIndex: this.state.currentIndex - 1})
+            this.props.setCurrentIndex(this.props.playlist.length - 1)
         }
     }
 
@@ -94,14 +98,14 @@ export class Player extends Component {
                 (
                 <View>
                     <View style={styles.player__info}>
-                        <Text style={styles.player__title}>{this.props.playlist[this.state.currentIndex].title}</Text>
-                        <Text style={styles.player__artist}>{this.props.playlist[this.state.currentIndex].artist}</Text>
+                        <Text style={styles.player__title}>{this.props.playlist[this.props.currentIndex].title}</Text>
+                        <Text style={styles.player__artist}>{this.props.playlist[this.props.currentIndex].artist}</Text>
                     </View>   
                     <View style={styles.player__controls}>
                         <TouchableOpacity style={styles.player__btn} onPress={this.previousTrack}>
                             <Icon size={40} name='step-backward' color='#fff'/>
                         </TouchableOpacity>
-                        {this.state.isPlaying 
+                        {this.props.isPlaying 
                         ?
                         <TouchableOpacity style={styles.player__playBtn} onPress={this.stopPlaying}>
                             <Icon size={60} name='pause' color='#fff'/>
@@ -167,11 +171,13 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         playlist: state.playlist.playlist,
-        isReady: state.playlist.isReady
+        isReady: state.playlist.isReady,
+        isPlaying: state.playlist.isPlaying,
+        currentIndex: state.playlist.currentIndex
     }
 }
 
 export default connect(
     mapStateToProps,
-    { setPlaylist, setPlayerStatus }
+    { setPlaylist, setPlayerStatus, setPlayingStatus, setCurrentIndex }
 )(Player)
