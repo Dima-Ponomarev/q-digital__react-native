@@ -22,12 +22,6 @@ const imageReducer = ( state = initialState, action ) => {
 const playlistReducer = ( state = initialState, action ) => {
   switch (action.type) {
     case SET_PLAYLIST:
-      if (state.playlist){
-        return {
-          ...state,
-          playlist: [...state.playlist, ...action.payload]
-        }
-      }
       return {
         ...state,
         playlist: action.payload

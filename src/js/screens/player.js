@@ -2,37 +2,52 @@ import React, { Component } from 'react'
 import { View } from 'react-native'
 import TrackPlayer from 'react-native-track-player'
 import { connect } from 'react-redux'
-import { setPLaylist } from '../redux/actions'
+import { setPlaylist } from '../redux/actions'
 import trackPlayerServices from '../services/trackPlayerService'
 
-const testTrack = {
-  id: '0',
-  url: 'https://imagesapi.osora.ru/audio/2.mp3',
-  title: 'Okay',
-  artist: 'Tima Belorusskiiy',
-}
+const localTracks = [
+    {
+        id: '3',
+        url: require('../../audio/IVOXYGEN-room.mp3'),
+        title: 'Room',
+        artist: 'IVOXYGEN',
+    },
+    {
+        id: '4',
+        url: require('../../audio/Jack-Stauber-Two-Time.mp3'),
+        title: 'Two time',
+        artist: 'Jack Stauber',
+    },
+    {
+        id: '5',
+        url: require('../../audio/Dora-In-Love.mp3'),
+        title: 'In love',
+        artist: 'Dora',
+    },
+]
 
 export class Player extends Component {
     componentDidMount(){
         fetch('https://imagesapi.osora.ru/?isAudio=true')
         .then(res => res.json())
         .then(data => {
-            const serverSongs = []
-            data.forEach((song, index) => {
-                serverSongs.push({
+            const serverTracks = []
+            data.forEach((track, index) => {
+                serverTracks.push({
                     id: `${index}`,
-                    url: song,
+                    url: track,
                     title: 'No title',
                     artist: 'Unknown'
                 })
             });
-            this.props.setPLaylist(serverSongs)
+            const tracks =  [...serverTracks, ...localTracks]
+            this.props.setPlaylist(tracks)
+            console.log(this.props.playlist)
         })
-
-    TrackPlayer.setupPlayer().then(() => {
-        TrackPlayer.registerPlaybackService(() => trackPlayerServices);
-    });
-}
+        TrackPlayer.setupPlayer().then(() => {
+            TrackPlayer.registerPlaybackService(() => trackPlayerServices);
+        });
+    }
 
     render() {
         return (
@@ -51,5 +66,5 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    { setPLaylist }
+    { setPlaylist }
 )(Player)

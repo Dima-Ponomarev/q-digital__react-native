@@ -14,7 +14,7 @@ export function setFetched(images) {
   }
 }
 
-export function setPLaylist(songs) {
+export function setPlaylist(songs) {
   return {
     type: SET_PLAYLIST,
     payload: songs
