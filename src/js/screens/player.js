@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, Text } from 'react-native'
 import TrackPlayer from 'react-native-track-player'
 import { connect } from 'react-redux'
 import { setPlaylist } from '../redux/actions'
@@ -30,7 +30,8 @@ const localTracks = [
 export class Player extends Component {
     state = {
         isReady: false,
-        isPlaying: false
+        isPlaying: false,
+        currentIndex: 0
     }
 
     componentDidMount(){
@@ -76,14 +77,17 @@ export class Player extends Component {
         } else {
             TrackPlayer.skipToNext()
         }
+        this.setState({currentIndex: (this.state.currentIndex + 1) % this.props.playlist.length})
     }
 
     previousTrack = async () => {
         const trackId = await TrackPlayer.getCurrentTrack()
         if (trackId === this.props.playlist[0].id){
             TrackPlayer.skip(this.props.playlist[this.props.playlist.length - 1].id)
+            this.setState({currentIndex: this.props.playlist.length - 1})
         } else {
             TrackPlayer.skipToPrevious()
+            this.setState({currentIndex: this.state.currentIndex - 1})
         }
     }
 
@@ -93,8 +97,9 @@ export class Player extends Component {
                 {this.state.isReady &&
                 (
                 <View>
-                    <View>
-
+                    <View style={styles.player__info}>
+                        <Text style={styles.player__title}>{this.props.playlist[this.state.currentIndex].title}</Text>
+                        <Text style={styles.player__artist}>{this.props.playlist[this.state.currentIndex].artist}</Text>
                     </View>   
                     <View style={styles.player__controls}>
                         <TouchableOpacity style={styles.player__btn} onPress={this.previousTrack}>
@@ -128,8 +133,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     player__controls: {
-        width: '60%',
-        justifyContent: 'space-around',
+        justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
     },
@@ -139,7 +143,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#000',
         width: 80,
         height: 80,
-        borderRadius: 40
+        borderRadius: 40,
+        marginHorizontal: 20,
     },
     player__btn: {
         justifyContent: 'center',
@@ -148,6 +153,18 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
         borderRadius: 25
+    },
+    player__info: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 20
+    },
+    player__title: {
+        fontWeight: '700',
+        fontSize: 30,
+    },
+    player__artist: {
+        fontSize: 20
     }
 })
 
