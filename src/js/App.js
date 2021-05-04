@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Main from './screens/main'
 import Slider from './screens/slider'
 import Navigation from './components/navigation'
+import Player from './screens/player'
 import { ScrollView, View } from 'react-native'
 import { NativeRouter as Router, Switch, Route } from 'react-router-native'
 import Redux from './redux/index'
@@ -26,6 +27,9 @@ export class App extends Component {
               </Route>
               <Route path='/slider'>
                 <Slider />
+              </Route>
+              <Route path='/player'>
+                <Player />
               </Route>
             </Switch>
             <Navigation/>

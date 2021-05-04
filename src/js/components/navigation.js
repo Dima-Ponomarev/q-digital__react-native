@@ -20,9 +20,9 @@ export class Navigation extends Component {
         <Link style={styles.nav__tab} to='/slider' component={TouchableOpacity}>
           <Icon size={40} name='image' color='#000'/>
         </Link>
-        <View style={styles.nav__tab}>
+        <Link style={styles.nav__tab} to='/player' component={TouchableOpacity}>
           <Icon size={40} name='music' color='#000'/>
-        </View>
+        </Link>
         <TouchableOpacity style={styles.nav__tab} onPress={() => this.handleRedirect('https://q-digital.org')}>
           <Icon size={40} name='globe' color='#000'/>
         </TouchableOpacity>
