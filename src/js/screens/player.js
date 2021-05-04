@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native'
 import TrackPlayer from 'react-native-track-player'
 import { connect } from 'react-redux'
-import { setPlaylist } from '../redux/actions'
+import { setPlaylist, setPlayerStatus } from '../redux/actions'
 import trackPlayerServices from '../services/trackPlayerService'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
@@ -29,17 +29,13 @@ const localTracks = [
 
 export class Player extends Component {
     state = {
-        isReady: false,
         isPlaying: false,
         currentIndex: 0
     }
 
     componentDidMount(){
-        TrackPlayer.setupPlayer().then(() => {
-            TrackPlayer.registerPlaybackService(() => trackPlayerServices);
-        });
-
-        if(!this.state.isPlaying){
+        if(!this.props.isReady){
+            TrackPlayer.setupPlayer()
             fetch('https://imagesapi.osora.ru/?isAudio=true')
             .then(res => res.json())
             .then(data => {
@@ -55,7 +51,7 @@ export class Player extends Component {
                 const tracks =  [...serverTracks, ...localTracks]
                 this.props.setPlaylist(tracks)
                 TrackPlayer.add(this.props.playlist)
-                this.setState({isReady: true})
+                this.props.setPlayerStatus(true)
             })
         }
     }
@@ -94,7 +90,7 @@ export class Player extends Component {
     render() {
         return (
             <View style={styles.player}>
-                {this.state.isReady &&
+                {this.props.isReady &&
                 (
                 <View>
                     <View style={styles.player__info}>
@@ -170,11 +166,12 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        playlist: state.playlist.playlist
+        playlist: state.playlist.playlist,
+        isReady: state.playlist.isReady
     }
 }
 
 export default connect(
     mapStateToProps,
-    { setPlaylist }
+    { setPlaylist, setPlayerStatus }
 )(Player)

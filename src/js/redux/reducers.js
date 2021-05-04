@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { SET_LOCAL, SET_FETCHED, SET_PLAYLIST } from './actionTypes'
+import { SET_LOCAL, SET_FETCHED, SET_PLAYLIST, SET_PLAYER_STATUS } from './actionTypes'
 import initialState from './initialState'
 
 const imageReducer = ( state = initialState, action ) => {
@@ -25,6 +25,11 @@ const playlistReducer = ( state = initialState, action ) => {
       return {
         ...state,
         playlist: action.payload
+      }
+    case SET_PLAYER_STATUS: 
+      return {
+        ...state,
+        isReady: action.payload
       }
     default: 
       return state

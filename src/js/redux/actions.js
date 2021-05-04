@@ -1,4 +1,4 @@
-import { SET_LOCAL, SET_FETCHED, SET_PLAYLIST} from './actionTypes'
+import { SET_LOCAL, SET_FETCHED, SET_PLAYLIST, SET_PLAYER_STATUS} from './actionTypes'
 
 export function setLocal(images) {
   return {
@@ -18,5 +18,12 @@ export function setPlaylist(songs) {
   return {
     type: SET_PLAYLIST,
     payload: songs
+  }
+}
+
+export function setPlayerStatus(status) {
+  return {
+    type: SET_PLAYER_STATUS,
+    payload: status
   }
 }
