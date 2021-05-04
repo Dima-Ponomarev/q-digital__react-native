@@ -1,6 +1,7 @@
 
 const initialState = {
-  images: {}
+  images: {},
+  playlist: {}
 }
 
 export default initialState
