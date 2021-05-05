@@ -3,19 +3,21 @@ import Main from './screens/main'
 import Slider from './screens/slider'
 import Navigation from './components/navigation'
 import Player from './screens/player'
-import { ScrollView, View } from 'react-native'
+import { View } from 'react-native'
 import { NativeRouter as Router, Switch, Route } from 'react-router-native'
-import Redux from './redux/index'
-import { createStore } from 'redux'
+import store from './redux/index'
+import { setPlayerStatus, setPlayingStatus } from './redux/actions'
 import { Provider } from 'react-redux' 
-
-const store = createStore(
-  Redux.Reducers, 
-  Redux.InitialState, 
-)
+import TrackPlayer from 'react-native-track-player'
 
 
 export class App extends Component {
+
+  componentWillUnmount(){
+    store.dispatch(setPlayingStatus(false))
+    TrackPlayer.pause()
+  }
+
   render() {
     return (
       <Provider store={store}>

@@ -28,7 +28,8 @@ const localTracks = [
 
 export class Player extends Component {
     componentDidMount(){
-        if(!this.props.isReady){
+        if(!this.props.isReady){    
+
             TrackPlayer.setupPlayer().then(() => {
                 TrackPlayer.updateOptions({
                     capabilities: [
@@ -55,6 +56,7 @@ export class Player extends Component {
                 const tracks =  [...serverTracks, ...localTracks]
                 this.props.setPlaylist(tracks)
                 TrackPlayer.add(this.props.playlist)
+                this.props.setCurrentIndex(0)
                 this.props.setPlayerStatus(true)
             })
         }
@@ -87,7 +89,7 @@ export class Player extends Component {
             this.props.setCurrentIndex(this.props.playlist.length - 1)
         } else {
             TrackPlayer.skipToPrevious()
-            this.props.setCurrentIndex(this.props.playlist.length - 1)
+            this.props.setCurrentIndex(this.props.currentIndex - 1)
         }
     }
 
