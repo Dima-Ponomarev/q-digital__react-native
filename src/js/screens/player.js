@@ -21,15 +21,32 @@ const localTracks = [
     {
         id: '5',
         url: require('../../audio/Dora-In-Love.mp3'),
-        title: 'In love',
-        artist: 'Dora',
+        title: 'Втюрилась',
+        artist: 'Дора',
     },
+]
+
+const serverTracksDescription = [
+    {
+        id: '0',
+        title: 'Cadillac',
+        artist: 'MORGENSHTERN & Элджей'   
+    },
+    {
+        id: '1',
+        title: 'Снова я напиваюсь',
+        artist: 'SLAVA MARLOW'
+    },
+    {
+        id: '2',
+        title: 'Окей',
+        artist: 'Тима Белорусских'
+    }
 ]
 
 export class Player extends Component {
     componentDidMount(){
         if(!this.props.isReady){    
-
             TrackPlayer.setupPlayer().then(() => {
                 TrackPlayer.updateOptions({
                     capabilities: [
@@ -47,10 +64,10 @@ export class Player extends Component {
                 const serverTracks = []
                 data.forEach((track, index) => {
                     serverTracks.push({
-                        id: `${index}`,
+                        id: serverTracksDescription[index].id,
                         url: track,
-                        title: 'No title',
-                        artist: 'Unknown'
+                        title: serverTracksDescription[index].title,
+                        artist: serverTracksDescription[index].artist
                     })
                 });
                 const tracks =  [...serverTracks, ...localTracks]
@@ -58,6 +75,7 @@ export class Player extends Component {
                 TrackPlayer.add(this.props.playlist)
                 this.props.setCurrentIndex(0)
                 this.props.setPlayerStatus(true)
+                this.props.setPlayingStatus(false)
             })
         }
     }
